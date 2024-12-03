@@ -1,0 +1,23 @@
+# Use: $ docker compose up -d && docker compose exec web /bin/bash
+
+version: '3.8'
+
+services:
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  # Adjust the port according to your application
+    volumes:
+      - .:/app
+    environment:
+      - PYTHONUNBUFFERED=1  # Ensures Python output is sent straight to terminal
+      - PYTHONDONTWRITEBYTECODE=1  # Prevents Python from writing .pyc files
+    restart: unless-stopped
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8000"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 40s
